@@ -90,50 +90,71 @@
       </div>
     </nav>
 
-    <div class="container mt-4">
-      <div class="row" id="coffee-list">
-        <!-- Coffee cards are dynamically inserted here -->
-      </div>
+    <div class="container mt-4" id="coffee-details">
+      <!-- Coffee details will be dynamically inserted here -->
     </div>
 
+    <div class="container p-3 mt-4">/***Comments here***/</div>
+
     <script>
-      // Fetch data from PHP and render it dynamically
-      fetch("fetch_coffees.php")
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(
-              "Network response was not ok " + response.statusText
+      // Get the coffee ID from the URL
+      const params = new URLSearchParams(window.location.search);
+      const coffeeId = params.get("id");
+
+      if (!coffeeId) {
+        document.getElementById("coffee-details").innerHTML =
+          "<p>Invalid coffee ID.</p>";
+      } else {
+        // Fetch coffee details
+        fetch(`details.php?id=${coffeeId}`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(
+                "Network response was not ok " + response.statusText
+              );
+            }
+            return response.json();
+          })
+          .then((data) => {
+            if (data.error) {
+              document.getElementById(
+                "coffee-details"
+              ).innerHTML = `<p>${data.error}</p>`;
+            } else {
+              const container = document.getElementById("coffee-details");
+              container.innerHTML = `
+                          <table class="table-bordered">
+                              <tr>
+                                  <td rowspan="5" style="width: 50%;"> 
+                                      <img class="img-fluid" src="https://i.imgur.com/SdgMDOM.jpeg" alt="Coffee picture">
+                                  </td>
+                                  <td><strong>Coffee Name:</strong> ${data.coffeename}</td>
+                              </tr>
+                              <tr>
+                                  <td><strong>Manufacturer:</strong> ${data.manufacturer}</td>
+                              </tr>
+                              <tr>
+                                  <td><strong>Region:</strong> ${data.region}</td>
+                              </tr>
+                              <tr>
+                                  <td><strong>Roasting:</strong> ${data.roasting}</td>
+                              </tr>
+                              <tr>
+                                  <td><strong>Flavors:</strong> ${data.flavornotes}</td>
+                              </tr>
+                          </table>
+                      `;
+            }
+          })
+          .catch((error) => {
+            console.error(
+              "There was a problem fetching coffee details:",
+              error
             );
-          }
-          return response.json();
-        })
-        .then((data) => {
-          const coffeeList = document.getElementById("coffee-list");
-          data.forEach((coffee) => {
-            // Create card for each coffee
-            const card = document.createElement("div");
-            card.className = "col-md-4";
-            card.innerHTML = `
-                      <div class="card mb-5 m-1 shadow-sm">
-                          <img class="card-img-top" src="
-                            https://i.imgur.com/SdgMDOM.jpeg
-                          " alt="image of coffee">
-                          <div class="card-body">
-                              <h5 class="card-title">${coffee.coffeename}</h5>
-                              <p class="card-text">${coffee.manufacturer}</p>
-                              <div class="d-flex justify-content-between align-items-center">
-                                  <span class="text-muted small">${coffee.region}</span>
-                                  <a href="details.html?id=${coffee.id}" class="btn btn-sm btn-primary">View</a>
-                              </div>
-                          </div>
-                      </div>
-                  `;
-            coffeeList.appendChild(card);
+            document.getElementById("coffee-details").innerHTML =
+              "<p>Error loading coffee details.</p>";
           });
-        })
-        .catch((error) => {
-          console.error("There was a problem with the fetch operation:", error);
-        });
+      }
     </script>
   </body>
 </html>
