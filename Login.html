@@ -15,7 +15,7 @@
 <body >
     <div style="display: flex; height: 100%; align-items:center; justify-content:center;">
         <div class="card rounded-5 formCard">
-            <form action="login.php" method="post">
+            <form id="loginForm">
                 <div class="formDiv">
                     <div class="inputDiv">
                         <i class="fa-solid fa-user"></i>
@@ -32,5 +32,35 @@
             </form>
         </div>
     </div>
+
+    <script>
+       document.getElementById("loginForm").addEventListener("submit", function (e) 
+       {
+        e.preventDefault();
+
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        fetch("login.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username, password }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = "index.html";
+                } else {
+                    alert(data.error || "Bejelentkezés sikertelen!");
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Hiba történt a kérés során!");
+            });
+        });
+    </script>
 </body>
 </html>
