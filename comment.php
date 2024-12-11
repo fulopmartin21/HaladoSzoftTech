@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 // Kapcsolódás az adatbázishoz
 $servername = "localhost"; // Adatbázis szerver
 $username = "root";        // Adatbázis felhasználó
@@ -15,7 +17,7 @@ if ($conn->connect_error) {
 
 // A komment adatainak lekérése (pl. POST metódussal)
 $coffeeID = $_POST['coffeeID'];  // A kávé azonosítója, amelyhez a komment tartozik
-$userID = $_POST['userID'];      // A felhasználó azonosítója
+$userID = $_SESSION['user_id'];      // A felhasználó azonosítója
 $comment = $_POST['comment'];    // A komment szövege
 
 // Ellenőrizzük, hogy létezik-e a coffeeID a Comments táblában
@@ -48,9 +50,11 @@ $stmt->bind_param("sii", $comment, $userID, $coffeeID);
 
 // Lekérdezés végrehajtása
 if ($stmt->execute()) {
-    echo "Komment sikeresen hozzáadva!";
+    // echo "Komment sikeresen hozzáadva!";
+    echo json_encode(["success" => true]);
 } else {
-    echo "Hiba történt a komment hozzáadásakor: " . $stmt->error;
+    //echo "Hiba történt a komment hozzáadásakor: " . $stmt->error;
+    echo json_encode(["success" => false]);
 }
 
 // Kapcsolat bezárása
