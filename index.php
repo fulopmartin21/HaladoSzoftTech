@@ -27,20 +27,12 @@ $isLoggedIn = isset($_SESSION['user_id']) && isset($_SESSION['username']);
         <ul class="navbar-nav me-auto mt-1 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link active me-3" aria-current="page" href="index.php">
-              <h4>Kávé Katalógus</h4>
+              <h4><i class="fa-solid fa-mug-saucer"></i> Kávé Katalógus</h4>
             </a>
-          </li>
-          <li class="nav-item mt-1">
-            <form class="d-flex" role="search" action="coffees.php" method="post">
-              <input class="form-control me-2" type="search" placeholder="Keresés..." aria-label="Keresés" />
-              <button class="btn btn-outline-success" type="submit">
-                <i class="fa-solid fa-magnifying-glass"></i>
-              </button>
-            </form>
           </li>
           <li class="nav-item ms-1 ms-md-2 mt-1 me-2">
             <a href="search.php"><button class="btn btn-outline-success" type="submit">
-                Részletes keresés
+                <i class="fa-solid fa-magnifying-glass"></i> Részletes keresés
               </button></a>
           </li>
         </ul>
@@ -48,11 +40,13 @@ $isLoggedIn = isset($_SESSION['user_id']) && isset($_SESSION['username']);
           <?php if (!$isLoggedIn): ?>
             <li class="nav-item me-2 mt-2 mt-md-0 ms-1 ms-md-0">
               <a href="registration.html"><button class="btn btn-outline-primary">
+                  <i class="fa-regular fa-address-card"></i>
                   Regisztráció
                 </button></a>
             </li>
             <li class="nav-item ms-1 me-2 mt-2 mt-md-0">
               <a href="login.html"><button class="btn btn-outline-primary">
+                  <i class="fa-solid fa-arrow-right-to-bracket"></i>
                   Bejelentkezés
                 </button></a>
             </li>
@@ -60,6 +54,7 @@ $isLoggedIn = isset($_SESSION['user_id']) && isset($_SESSION['username']);
             <li class="nav-item ms-1 me-2 mt-2 mt-md-0">
               <a href="logout.php"><button class="btn btn-outline-primary">
                   Kijelentkezés
+                  <i class="fa-solid fa-arrow-right-from-bracket"></i>
                 </button></a>
             </li>
           <?php endif; ?>
