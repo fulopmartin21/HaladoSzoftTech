@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Ellenőrizzük, hogy a felhasználónév már létezik-e
         $sql_check = "SELECT * FROM users WHERE username='$username'";
         $result = $conn->query($sql_check);
-        
+
         if ($result->num_rows > 0) {
             echo "A felhasználónév már foglalt!";
         } else {
@@ -42,7 +42,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     VALUES ('$name', '$birth_place', '$birth_date', '$username', '$hashed_password')";
 
             if ($conn->query($sql) === TRUE) {
-                echo "Sikeres regisztráció!";
+                header("Location: index.php");
+                exit;
             } else {
                 echo "Hiba: " . $sql . "<br>" . $conn->error;
             }
