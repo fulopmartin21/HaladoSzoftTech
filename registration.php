@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Adatbázis kapcsolódás
 $servername = "localhost";
 $username = "root";  // alapértelmezett MySQL felhasználónév
@@ -42,6 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     VALUES ('$name', '$birth_place', '$birth_date', '$username', '$hashed_password')";
 
             if ($conn->query($sql) === TRUE) {
+                $_SESSION['message'] = 'Sikeres regisztráció!';
                 header("Location: index.php");
                 exit;
             } else {
