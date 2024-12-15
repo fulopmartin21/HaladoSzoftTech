@@ -63,6 +63,13 @@ $isLoggedIn = isset($_SESSION['user_id']) && isset($_SESSION['username']);
     </div>
   </nav>
 
+  <div class="container">
+    <?php if (!empty($_SESSION['message'])) {
+      echo '<p class="message p-2"> ' . $_SESSION['message'] . '</p>';
+      unset($_SESSION['message']);
+    } ?>
+  </div>
+
   <div class="container mt-4">
     <div class="row" id="coffee-list">
       <!-- Coffee cards are dynamically inserted here -->
