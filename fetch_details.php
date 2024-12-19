@@ -27,7 +27,7 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 $id = intval($_GET['id']);
 
 // Fetch the coffee data by ID
-$sql = "SELECT id, manufacturer, coffeename, region, roasting, flavornotes FROM coffees WHERE id = ?";
+$sql = "SELECT id, manufacturer, coffeename, region, roasting, flavornotes, link FROM coffees WHERE id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $id);
 $stmt->execute();

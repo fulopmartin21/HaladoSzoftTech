@@ -146,11 +146,8 @@ $isLoggedIn = isset($_SESSION['user_id']) && isset($_SESSION['username']);
                                   <td><strong>Ízjegyek:</strong> ${data.flavornotes}</td>
                               </tr>
                               <tr> 
-                                <td><strong>Megvásárolható itt:</strong> 
-                                  <form action="increment_counter.php" method="POST" style="display: inline;">
-                                      <input type="hidden" name="coffee_id" value="${data.id}" />
-                                      <button type="submit" class="btn btn-link text-decoration-none" style="padding: 0; padding-bottom: 5px;">Casino Mocca</button>
-                                  </form>
+                                <td><strong>Megvásárolható:</strong> 
+                                  <a href=${data.link} class="text-decoration-none">Itt</a>
                                 </td>
                               </tr>
                           </table>
